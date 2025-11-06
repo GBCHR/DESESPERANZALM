@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desesperanza - Tienda Gourmet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e'
+                        },
+                        'accent': {
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-primary-50 to-white min-h-screen">
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden backdrop-blur-sm">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl p-10 max-w-md w-full shadow-2xl border-t-4 border-primary-500">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900">Acceso a tu Cuenta</h2>
+                    <button onclick="closeModals()" class="text-gray-500 hover:text-gray-900 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form class="space-y-6" id="loginForm">
+                    <div>
+                                <label for="loginUsername" class="block text-sm font-semibold text-gray-900">Nombre de Usuario</label>
+                                <input type="text" id="loginUsername" name="username" required
+                                    class="mt-2 block w-full px-4 py-3 border-2 border-primary-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                    </div>
+                    
+                    <div class="relative">
+                        <label for="loginPassword" class="block text-sm font-semibold text-gray-900">Contraseña</label>
+                        <input type="password" id="loginPassword" name="password" required
+                            class="mt-2 block w-full pr-12 px-4 py-3 border-2 border-primary-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                        <button type="button" class="absolute right-3 top-11 text-gray-500 hover:text-gray-900" data-toggle-target="loginPassword" aria-label="Mostrar contraseña">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="submit"
+                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-white bg-gradient-to-r from-primary-500 to-primary-700 hover:from-primary-600 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 font-semibold">
+                            Entrar Ahora
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-sm text-gray-700 font-medium">
+                            ¿Primera vez aquí?
+                            <button type="button" onclick="showRegisterModal()" class="text-primary-600 hover:text-primary-800 font-bold underline">
+                                Crear cuenta nueva
+                            </button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="cartSidebar" class="fixed inset-y-0 right-0 w-96 bg-gradient-to-b from-primary-600 to-primary-800 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50">
+        <div class="flex flex-col h-full">
+            <div class="p-6 border-b border-primary-500">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fas fa-shopping-bag"></i> Mis Compras
+                    </h2>
+                    <button onclick="toggleCart()" class="text-white hover:text-accent-200 text-xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cartItems">
+                
+            </div>
+
+            <div class="border-t border-primary-500 p-6 space-y-4 bg-primary-700">
+                <div class="flex justify-between items-center text-xl">
+                    <span class="font-bold text-white">Importe Total</span>
+                    <span class="font-bold text-accent-200" id="cartTotal">0.00€</span>
+                </div>
+                <button onclick="checkout()" 
+                    class="w-full bg-gradient-to-r from-accent-500 to-accent-600 text-white py-4 px-4 rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all duration-300 font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    <i class="fas fa-check-circle mr-2"></i>Confirmar Compra
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden backdrop-blur-sm">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl p-10 max-w-md w-full shadow-2xl border-t-4 border-accent-500">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-900">Nueva Cuenta</h2>
+                    <button onclick="closeModals()" class="text-gray-500 hover:text-gray-900 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form class="space-y-6" id="registerForm">
+                    <div>
+                        <label for="registerUsername" class="block text-sm font-semibold text-gray-900">Nombre de Usuario</label>
+                        <input type="text" id="registerUsername" name="username" required
+                            class="mt-2 block w-full px-4 py-3 border-2 border-primary-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                    </div>
+                    <div class="relative">
+                        <label for="registerPassword" class="block text-sm font-semibold text-gray-900">Contraseña</label>
+                        <input type="password" id="registerPassword" name="password" required
+                            class="mt-2 block w-full pr-12 px-4 py-3 border-2 border-primary-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                        <button type="button" class="absolute right-3 top-11 text-gray-500 hover:text-gray-900" data-toggle-target="registerPassword" aria-label="Mostrar contraseña">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="relative">
+                        <label for="confirmPassword" class="block text-sm font-semibold text-gray-900">Confirmar Contraseña</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required
+                            class="mt-2 block w-full pr-12 px-4 py-3 border-2 border-primary-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                        <button type="button" class="absolute right-3 top-11 text-gray-500 hover:text-gray-900" data-toggle-target="confirmPassword" aria-label="Mostrar contraseña">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="submit"
+                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-white bg-gradient-to-r from-primary-500 to-primary-700 hover:from-primary-600 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-300 font-semibold">
+                            Crear mi Cuenta
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-sm text-gray-700 font-medium">
+                            ¿Ya eres miembro?
+                            <button type="button" onclick="showLoginModal()" class="text-primary-600 hover:text-primary-800 font-bold underline">
+                                Acceder aquí
+                            </button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bg-gradient-to-r from-primary-700 via-primary-600 to-primary-700 shadow-xl py-4 sticky top-0 z-40 border-b-4 border-accent-500">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <h1 class="text-3xl font-black tracking-tight text-white flex items-center gap-3">
+                <i class="fas fa-bread-slice text-accent-300"></i>
+                DESESPERANZA
+            </h1>
+            <div class="flex items-center space-x-6">
+                <a href="#inicio" class="text-white hover:text-accent-200 text-sm font-bold uppercase tracking-wider transition-colors">Home</a>
+                <a href="#productos" class="text-white hover:text-accent-200 text-sm font-bold uppercase tracking-wider transition-colors">Catálogo</a>
+                <a href="#contacto" class="text-white hover:text-accent-200 text-sm font-bold uppercase tracking-wider transition-colors">Ubicación</a>
+                <button onclick="toggleCart()" class="bg-accent-500 text-white px-4 py-2 rounded-full hover:bg-accent-600 transition-all duration-300 relative shadow-lg hover:shadow-xl transform hover:scale-110">
+                    <i class="fas fa-shopping-cart text-lg"></i>
+                    <span id="cartCounter" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold shadow-md">0</span>
+                </button>
+                <button id="loginBtn" onclick="showLoginModal()" 
+                    class="bg-white border-2 border-white text-primary-700 px-5 py-2 rounded-full hover:bg-transparent hover:text-white transition-all duration-300 font-bold shadow-lg">
+                    <i class="fas fa-user mr-2"></i>Mi Cuenta
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="inicio" class="container mx-auto py-32 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-3xl shadow-2xl p-12 border-l-8 border-primary-500">
+                <h2 class="text-7xl font-black text-gray-900 mb-6 leading-tight">Sabor que enamora tus sentidos</h2>
+                <p class="text-2xl text-gray-800 mb-10 font-medium">Experiencia culinaria premium desde el año 2010</p>
+                <a href="#productos" class="inline-block bg-gradient-to-r from-accent-500 to-accent-600 text-white px-16 py-5 hover:from-accent-600 hover:to-accent-700 transition-all duration-300 rounded-full shadow-xl hover:shadow-2xl transform hover:-translate-y-2 font-bold text-lg">
+                    <i class="fas fa-arrow-down mr-2"></i>Explorar Ahora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="productos" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-black text-gray-900 mb-4">Nuestras Especialidades</h2>
+                <div class="w-32 h-2 bg-gradient-to-r from-accent-500 to-accent-600 mx-auto rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="bg-gradient-to-br from-primary-50 to-white p-6 rounded-2xl border-2 border-primary-200 group hover:border-primary-500 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col">
+                    <div class="relative overflow-hidden rounded-xl mb-6 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&h=500&fit=crop" 
+                             alt="Baguette" 
+                             class="w-full h-72 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-accent-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                            2.50€
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Baguette Clásica</h3>
+                    <p class="text-gray-700 mb-6 font-medium flex-grow">Recién horneada con harina especial</p>
+                    <button onclick="addToCart('Baguette Tradicional', 2.50, 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&h=500&fit=crop')" 
+                        class="w-full bg-black text-white py-5 px-6 rounded-2xl hover:bg-gray-800 transform hover:scale-105 transition-all duration-300 font-black shadow-2xl text-xl border-2 border-gray-900 mt-auto">
+                        <i class="fas fa-cart-plus mr-3 text-2xl"></i>AGREGAR AL CARRITO
+                    </button>
+                </div>
+                
+                <div class="bg-gradient-to-br from-primary-50 to-white p-6 rounded-2xl border-2 border-primary-200 group hover:border-primary-500 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col">
+                    <div class="relative overflow-hidden rounded-xl mb-6 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&h=500&fit=crop" 
+                             alt="Croissant" 
+                             class="w-full h-72 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-accent-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                            1.50€
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Croissant Premium</h3>
+                    <p class="text-gray-700 mb-6 font-medium flex-grow">Masa hojaldrada estilo francés</p>
+                    <button onclick="addToCart('Croissant de Mantequilla', 1.50, 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&h=500&fit=crop')" 
+                        class="w-full bg-black text-white py-5 px-6 rounded-2xl hover:bg-gray-800 transform hover:scale-105 transition-all duration-300 font-black shadow-2xl text-xl border-2 border-gray-900 mt-auto">
+                        <i class="fas fa-cart-plus mr-3 text-2xl"></i>AGREGAR AL CARRITO
+                    </button>
+                </div>
+                
+                <div class="bg-gradient-to-br from-primary-50 to-white p-6 rounded-2xl border-2 border-primary-200 group hover:border-primary-500 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col">
+                    <div class="relative overflow-hidden rounded-xl mb-6 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1583738712333-5a3df2aa3be1?w=500&h=500&fit=crop" 
+                             alt="Pan de Masa Madre" 
+                             class="w-full h-72 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-accent-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                            3.50€
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Pan Artesanal Rústico</h3>
+                    <p class="text-gray-700 mb-6 font-medium flex-grow">Elaborado con masa madre natural</p>
+                    <button onclick="addToCart('Pan de Masa Madre', 3.50, 'https://images.unsplash.com/photo-1583738712333-5a3df2aa3be1?w=500&h=500&fit=crop')" 
+                        class="w-full bg-black text-white py-5 px-6 rounded-2xl hover:bg-gray-800 transform hover:scale-105 transition-all duration-300 font-black shadow-2xl text-xl border-2 border-gray-900 mt-auto">
+                        <i class="fas fa-cart-plus mr-3 text-2xl"></i>AGREGAR AL CARRITO
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="container mx-auto py-24 px-6">
+        <div class="max-w-2xl mx-auto bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl shadow-2xl p-12 text-white">
+            <h2 class="text-4xl font-black text-center mb-12 flex items-center justify-center gap-3">
+                <i class="fas fa-map-marker-alt text-accent-300"></i>
+                Encuéntranos
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="bg-accent-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-location-dot text-2xl text-white"></i>
+                    </div>
+                    <p class="text-sm font-bold text-accent-200 mb-2 uppercase tracking-wider">Ubicación</p>
+                    <p class="text-white font-semibold">Avenida Principal 456, Centro</p>
+                </div>
+                <div class="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="bg-accent-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-clock text-2xl text-white"></i>
+                    </div>
+                    <p class="text-sm font-bold text-accent-200 mb-2 uppercase tracking-wider">Horarios</p>
+                    <p class="text-white font-semibold">Martes a Domingo<br>9:00 - 21:00</p>
+                </div>
+                <div class="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="bg-accent-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-phone text-2xl text-white"></i>
+                    </div>
+                    <p class="text-sm font-bold text-accent-200 mb-2 uppercase tracking-wider">Contacto</p>
+                    <p class="text-white font-semibold">+34 987 654 321</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gradient-to-r from-primary-900 via-primary-800 to-primary-900 text-white py-8 border-t-4 border-accent-500">
+        <div class="container mx-auto px-6 text-center">
+            <p class="font-bold text-lg">&copy; 2025 DESESPERANZA. Reservados todos los derechos.</p>
+            <div class="mt-4 flex justify-center gap-6">
+                <i class="fab fa-facebook text-2xl hover:text-accent-300 cursor-pointer transition-colors"></i>
+                <i class="fab fa-instagram text-2xl hover:text-accent-300 cursor-pointer transition-colors"></i>
+                <i class="fab fa-twitter text-2xl hover:text-accent-300 cursor-pointer transition-colors"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script src="validacion.js"></script>
+    <script src="main/main.js"></script>
+</body>
+</html>

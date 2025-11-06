@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo - Desesperanza</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e'
+                        },
+                        'accent': {
+                            100: '#fef3c7',
+                            200: '#fde68a',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-primary-50 to-white min-h-screen">
+    <nav class="bg-gradient-to-r from-primary-700 via-primary-600 to-primary-700 shadow-xl py-4 sticky top-0 z-40 border-b-4 border-accent-500">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <div class="flex items-center space-x-2">
+                <h1 class="text-3xl font-black tracking-tight text-white flex items-center gap-3">
+                    <i class="fas fa-bread-slice text-accent-300"></i>
+                    DESESPERANZA
+                </h1>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="#adminManagement" class="text-white hover:text-accent-200 text-sm font-bold uppercase tracking-wider transition-colors">Administrar</a>
+                <button id="loginBtn" onclick="showLoginModal()" 
+                    class="bg-white border-2 border-white text-primary-700 px-5 py-2 rounded-full hover:bg-transparent hover:text-white transition-all duration-300 font-bold shadow-lg">
+                    <i class="fas fa-user mr-2"></i>Mi Cuenta
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="inicio" class="container mx-auto py-32 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-3xl shadow-2xl p-12 border-l-8 border-primary-500">
+                <h2 class="text-7xl font-black text-gray-900 mb-6 leading-tight">Sabor que enamora tus sentidos</h2>
+                <p class="text-2xl text-gray-800 mb-10 font-medium">Experiencia culinaria premium desde el año 2010</p>
+                <a href="#productos" class="inline-block bg-gradient-to-r from-accent-500 to-accent-600 text-white px-16 py-5 hover:from-accent-600 hover:to-accent-700 transition-all duration-300 rounded-full shadow-xl hover:shadow-2xl transform hover:-translate-y-2 font-bold text-lg">
+                    <i class="fas fa-arrow-down mr-2"></i>Explorar Ahora
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="productos" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-black text-gray-900 mb-4">Nuestras Especialidades</h2>
+                <div class="w-32 h-2 bg-gradient-to-r from-accent-500 to-accent-600 mx-auto rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flex flex-col bg-gradient-to-br from-primary-50 to-white p-6 rounded-2xl border-2 border-primary-200 group hover:border-primary-500 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden rounded-xl mb-6 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&h=500&fit=crop" alt="Baguette" class="w-full h-72 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-accent-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                            2.50€
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Baguette Clásica</h3>
+                    <p class="flex-grow text-gray-700 mt-2 mb-6 font-medium">Recién horneada con harina especial</p>
+                    <button onclick="addToCart('Baguette Tradicional', 2.50, 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&h=500&fit=crop')" class="mt-auto w-full bg-black text-white py-5 px-6 rounded-2xl hover:bg-gray-800 transform hover:scale-105 transition-all duration-300 font-black shadow-2xl text-xl border-2 border-gray-900">
+                        <i class="fas fa-cart-plus mr-3 text-2xl"></i>AGREGAR AL CARRITO
+                    </button>
+                </div>
+                <div class="flex flex-col bg-gradient-to-br from-primary-50 to-white p-6 rounded-2xl border-2 border-primary-200 group hover:border-primary-500 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden rounded-xl mb-6 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&h=500&fit=crop" alt="Croissant" class="w-full h-72 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-accent-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                            1.50€
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Croissant Premium</h3>
+                    <p class="flex-grow text-gray-700 mt-2 mb-6 font-medium">Masa hojaldrada estilo francés</p>
+                    <button onclick="addToCart('Croissant de Mantequilla', 1.50, 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&h=500&fit=crop')" class="mt-auto w-full bg-black text-white py-5 px-6 rounded-2xl hover:bg-gray-800 transform hover:scale-105 transition-all duration-300 font-black shadow-2xl text-xl border-2 border-gray-900">
+                        <i class="fas fa-cart-plus mr-3 text-2xl"></i>AGREGAR AL CARRITO
+                    </button>
+                </div>
+                <div class="flex flex-col bg-gradient-to-br from-primary-50 to-white p-6 rounded-2xl border-2 border-primary-200 group hover:border-primary-500 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="relative overflow-hidden rounded-xl mb-6 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1583738712333-5a3df2aa3be1?w=500&h=500&fit=crop" alt="Pan de Masa Madre" class="w-full h-72 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-accent-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                            3.50€
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Pan Artesanal Rústico</h3>
+                    <p class="flex-grow text-gray-700 mt-2 mb-6 font-medium">Elaborado con masa madre natural</p>
+                    <button onclick="addToCart('Pan de Masa Madre', 3.50, 'https://images.unsplash.com/photo-1583738712333-5a3df2aa3be1?w=500&h=500&fit=crop')" class="mt-auto w-full bg-black text-white py-5 px-6 rounded-2xl hover:bg-gray-800 transform hover:scale-105 transition-all duration-300 font-black shadow-2xl text-xl border-2 border-gray-900">
+                        <i class="fas fa-cart-plus mr-3 text-2xl"></i>AGREGAR AL CARRITO
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="container mx-auto py-24 px-6">
+        <div class="max-w-2xl mx-auto bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl shadow-2xl p-12 text-white">
+            <h2 class="text-4xl font-black text-center mb-12 flex items-center justify-center gap-3">
+                <i class="fas fa-map-marker-alt text-accent-300"></i>
+                Encuéntranos
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="bg-accent-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-location-dot text-2xl text-white"></i>
+                    </div>
+                    <p class="text-sm font-bold text-accent-200 mb-2 uppercase tracking-wider">Ubicación</p>
+                    <p class="text-white font-semibold">Avenida Principal 456, Centro</p>
+                </div>
+                <div class="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="bg-accent-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-clock text-2xl text-white"></i>
+                    </div>
+                    <p class="text-sm font-bold text-accent-200 mb-2 uppercase tracking-wider">Horarios</p>
+                    <p class="text-white font-semibold">Martes a Domingo<br>9:00 - 21:00</p>
+                </div>
+                <div class="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="bg-accent-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-phone text-2xl text-white"></i>
+                    </div>
+                    <p class="text-sm font-bold text-accent-200 mb-2 uppercase tracking-wider">Contacto</p>
+                    <p class="text-white font-semibold">+34 987 654 321</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    
+    <div id="adminManagement" class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-primary-500">
+            <div class="border-b-2 border-primary-200 mb-8">
+                <div class="flex -mb-px border-b-4 border-primary-600">
+                    <h2 class="px-6 py-3 font-black text-gray-900 text-2xl">
+                        <i class="fas fa-boxes mr-2"></i>Inventario
+                    </h2>
+                </div>
+            </div>
+
+            <div id="productsTab" class="tab-content">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-bold text-gray-900">Control de Inventario</h2>
+                    <button onclick="showAddProductModal()" 
+                        class="bg-gradient-to-r from-accent-500 to-accent-600 text-white px-6 py-3 rounded-xl hover:from-accent-600 hover:to-accent-700 transition-all duration-300 font-bold shadow-lg">
+                        <i class="fas fa-plus mr-2"></i>Nuevo Producto
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead>
+                            <tr class="border-b-2 border-primary-200 bg-primary-50">
+                                <th class="text-left py-4 px-6 text-gray-900 font-bold">Artículo</th>
+                                <th class="text-left py-4 px-6 text-gray-900 font-bold">Precio</th>
+                                <th class="text-left py-4 px-6 text-gray-900 font-bold">Existencias</th>
+                                <th class="text-left py-4 px-6 text-gray-900 font-bold">Estado</th>
+                                <th class="text-right py-4 px-6 text-gray-900 font-bold">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminProductsTbody">
+                            <tr class="border-b border-gray-100 hover:bg-primary-50 transition-colors">
+                                <td class="py-4 px-6">
+                                    <div class="flex items-center">
+                                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff" 
+                                             alt="Baguette" 
+                                             class="w-12 h-12 rounded-lg object-cover mr-4 shadow-md">
+                                        <div>
+                                            <p class="text-gray-900 font-bold">Baguette Clásica</p>
+                                            <p class="text-sm text-gray-700">Pan especial</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-6 text-gray-900 font-semibold">2.50€</td>
+                                <td class="py-4 px-6 text-gray-900 font-semibold">45</td>
+                                <td class="py-4 px-6">
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-bold">
+                                        Activo
+                                    </span>
+                                </td>
+                                <td class="py-4 px-6">
+                                    <div class="flex justify-end space-x-3">
+                                        <button class="text-primary-600 hover:text-primary-800 text-xl">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-500 hover:text-red-700 text-xl">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="adminUsersSection" class="mt-12">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900"><i class="fas fa-users mr-2"></i>Control de Usuarios</h2>
+                    <button id="refreshUsersBtn" class="bg-gradient-to-r from-primary-500 to-primary-700 text-white px-6 py-3 rounded-xl hover:from-primary-600 hover:to-primary-800 transition-all duration-300 font-bold shadow-lg">
+                        <i class="fas fa-sync mr-2"></i>Refrescar
+                    </button>
+                </div>
+                <div class="overflow-x-auto bg-white rounded-2xl p-6 shadow-lg border-2 border-primary-200">
+                    <table class="min-w-full" id="adminUsersTable">
+                        <thead>
+                            <tr class="border-b-2 border-primary-200 bg-primary-50">
+                                <th class="text-left py-4 px-6 text-gray-900 font-bold">ID</th>
+                                <th class="text-left py-4 px-6 text-gray-900 font-bold">Usuario</th>
+                                <th class="text-left py-4 px-6 text-gray-900 font-bold">Administrador</th>
+                                <th class="text-right py-4 px-6 text-gray-900 font-bold">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminUsersTbody">
+                            <tr><td colspan="4" class="py-8 text-center text-gray-700 font-semibold">Cargando información...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+    </div>
+
+    
+    
+    <div id="addProductModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg p-8 max-w-md w-full">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-light text-bread-700">Añadir Producto</h2>
+                    <button onclick="closeAddProductModal()" class="text-bread-500 hover:text-bread-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="addProductForm" class="space-y-6">
+                    <div>
+                        <label for="productName" class="block text-sm font-medium text-bread-600">Nombre del Producto</label>
+                        <input type="text" id="productName" required
+                            class="mt-1 block w-full px-3 py-2 border border-bread-200 rounded-md shadow-sm focus:outline-none focus:ring-bread-500 focus:border-bread-500">
+                    </div>
+                    <div>
+                        <label for="productDescription" class="block text-sm font-medium text-bread-600">Descripción</label>
+                        <textarea id="productDescription" rows="3" required
+                            class="mt-1 block w-full px-3 py-2 border border-bread-200 rounded-md shadow-sm focus:outline-none focus:ring-bread-500 focus:border-bread-500"></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="productPrice" class="block text-sm font-medium text-bread-600">Precio ($MXN)</label>
+                            <input type="number" id="productPrice" step="0.01" min="0" required
+                                class="mt-1 block w-full px-3 py-2 border border-bread-200 rounded-md shadow-sm focus:outline-none focus:ring-bread-500 focus:border-bread-500"
+                                placeholder="0.00">
+                        </div>
+                        <div>
+                            <label for="productStock" class="block text-sm font-medium text-bread-600">Stock</label>
+                            <input type="number" id="productStock" step="1" min="0" 
+                                class="mt-1 block w-full px-3 py-2 border border-bread-200 rounded-md shadow-sm focus:outline-none focus:ring-bread-500 focus:border-bread-500"
+                                placeholder="0">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="productImage" class="block text-sm font-medium text-bread-600">Imagen</label>
+                            <input type="file" id="productImage" accept="image/*" required
+                                class="mt-1 block w-full px-3 py-2 border border-bread-200 rounded-md shadow-sm focus:outline-none focus:ring-bread-500 focus:border-bread-500">
+                            <p class="text-xs text-bread-500 mt-1">Archivos permitidos: JPG, PNG, GIF (máx. 5MB)</p>
+                            <p class="text-xs text-bread-400 mt-1" id="imageEditNote" style="display: none;">Al editar, la imagen es opcional. Si no seleccionas una nueva, se mantendrá la actual.</p>
+                            <div id="imagePreview" class="mt-2 hidden">
+                                <img id="previewImg" src="" alt="Vista previa" class="w-24 h-24 object-cover rounded border">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="productSeason" class="block text-sm font-medium text-bread-600">Temporada</label>
+                            <input type="text" id="productSeason" placeholder="Ej: Primavera" 
+                                class="mt-1 block w-full px-3 py-2 border border-bread-200 rounded-md shadow-sm focus:outline-none focus:ring-bread-500 focus:border-bread-500">
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="closeAddProductModal()"
+                            class="px-4 py-2 border border-bread-500 text-bread-500 rounded hover:bg-bread-50 transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit"
+                            class="px-4 py-2 bg-bread-500 text-white rounded hover:bg-bread-600 transition-colors">
+                            Guardar Producto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg p-8 max-w-md w-full">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-light text-bread-700">Iniciar Sesión</h2>
+                    <button onclick="closeModals()" class="text-bread-500 hover:text-bread-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form class="space-y-6" id="loginForm">
+                    <div>
+                        <label for="loginUsername" class="block text-sm font-medium text-bread-600">Usuario</label>
+                        <input type="text" id="loginUsername" name="username" required
+                            class="mt-1 block w-full px-3 py-2 border border-bread-200 rounded-md shadow-sm focus:outline-none focus:ring-bread-500 focus:border-bread-500">
+                    </div>
+                    <div class="relative">
+                        <input type="password" id="loginPassword" name="password" required
+                            class="mt-1 block w-full pr-10 px-3 py-2 border border-bread-200 rounded-md shadow-sm focus:outline-none focus:ring-bread-500 focus:border-bread-500">
+                        <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 text-bread-500" data-toggle-target="loginPassword" aria-label="Mostrar contraseña">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="submit"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-bread-500 hover:bg-bread-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bread-500 transition-colors duration-300">
+                            Iniciar Sesión
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-sm text-bread-600">
+                            ¿No tienes cuenta?
+                            <button type="button" onclick="showRegisterModal()" class="text-bread-500 hover:text-bread-700 font-medium">
+                                Regístrate
+                            </button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-lg p-8 max-w-md w-full">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-light text-bread-700">Registro</h2>
+                    <button onclick="closeModals()" class="text-bread-500 hover:text-bread-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form class="space-y-6" id="registerForm">
+                    <div>
+                        <label for="registerUsername" class="block text-sm font-medium text-bread-600">Usuario</label>
+                        <input type="text" id="registerUsername" name="username" required
+                            class="mt-1 block w-full px-3 py-2 border border-bread-200 rounded-md shadow-sm focus:outline-none focus:ring-bread-500 focus:border-bread-500">
+                    </div>
+                    <div class="relative">
+                        <label for="registerPassword" class="block text-sm font-medium text-bread-600">Contraseña</label>
+                        <input type="password" id="registerPassword" name="password" required
+                            class="mt-1 block w-full pr-10 px-3 py-2 border border-bread-200 rounded-md shadow-sm focus:outline-none focus:ring-bread-500 focus:border-bread-500">
+                        <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 text-bread-500" data-toggle-target="registerPassword" aria-label="Mostrar contraseña">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="relative">
+                        <label for="confirmPassword" class="block text-sm font-medium text-bread-600">Confirmar Contraseña</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required
+                            class="mt-1 block w-full pr-10 px-3 py-2 border border-bread-200 rounded-md shadow-sm focus:outline-none focus:ring-bread-500 focus:border-bread-500">
+                        <button type="button" class="absolute right-2 top-1/2 -translate-y-1/2 text-bread-500" data-toggle-target="confirmPassword" aria-label="Mostrar contraseña">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="submit"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-bread-500 hover:bg-bread-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bread-500 transition-colors duration-300">
+                            Registrarse
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-sm text-bread-600">
+                            ¿Ya tienes cuenta?
+                            <button type="button" onclick="showLoginModal()" class="text-bread-500 hover:text-bread-700 font-medium">
+                                Inicia Sesión
+                            </button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-bread-700 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 PANADERÍA. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="/validacion.js"></script>
+    <script src="/main/main.js"></script>
+</body>
+</html>
