@@ -6,6 +6,14 @@
     <title>Desesperanza - Tienda Gourmet</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
     <script>
         tailwind.config = {
             theme: {
@@ -257,36 +265,71 @@
     </section>
 
     <section id="contacto" class="container mx-auto py-24 px-6">
-        <div class="max-w-2xl mx-auto bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl shadow-2xl p-12 text-white">
-            <h2 class="text-4xl font-black text-center mb-12 flex items-center justify-center gap-3">
-                <i class="fas fa-map-marker-alt text-accent-300"></i>
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-5xl font-black text-center mb-16 text-gray-900">
+                <i class="fas fa-map-marker-alt text-primary-600 mr-3"></i>
                 Encuéntranos
             </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="bg-accent-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fas fa-location-dot text-2xl text-white"></i>
+            
+            <!-- Mapa de Leaflet -->
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden mb-8">
+                <div id="map" class="w-full h-96"></div>
+            </div>
+            
+            <!-- Información de contacto -->
+            <div class="bg-gradient-to-br from-primary-600 to-primary-800 rounded-3xl shadow-2xl p-12 text-white">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="bg-accent-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i class="fas fa-location-dot text-2xl text-white"></i>
+                        </div>
+                        <p class="text-sm font-bold text-accent-200 mb-2 uppercase tracking-wider">Ubicación</p>
+                        <p class="text-white font-semibold">Avenida Principal 456, Centro</p>
                     </div>
-                    <p class="text-sm font-bold text-accent-200 mb-2 uppercase tracking-wider">Ubicación</p>
-                    <p class="text-white font-semibold">Avenida Principal 456, Centro</p>
-                </div>
-                <div class="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="bg-accent-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fas fa-clock text-2xl text-white"></i>
+                    <div class="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="bg-accent-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i class="fas fa-clock text-2xl text-white"></i>
+                        </div>
+                        <p class="text-sm font-bold text-accent-200 mb-2 uppercase tracking-wider">Horarios</p>
+                        <p class="text-white font-semibold">Martes a Domingo<br>9:00 - 21:00</p>
                     </div>
-                    <p class="text-sm font-bold text-accent-200 mb-2 uppercase tracking-wider">Horarios</p>
-                    <p class="text-white font-semibold">Martes a Domingo<br>9:00 - 21:00</p>
-                </div>
-                <div class="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="bg-accent-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fas fa-phone text-2xl text-white"></i>
+                    <div class="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="bg-accent-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                            <i class="fas fa-phone text-2xl text-white"></i>
+                        </div>
+                        <p class="text-sm font-bold text-accent-200 mb-2 uppercase tracking-wider">Contacto</p>
+                        <p class="text-white font-semibold">+34 987 654 321</p>
                     </div>
-                    <p class="text-sm font-bold text-accent-200 mb-2 uppercase tracking-wider">Contacto</p>
-                    <p class="text-white font-semibold">+34 987 654 321</p>
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        // Inicializar el mapa de Leaflet cuando la página cargue
+        document.addEventListener('DOMContentLoaded', function() {
+            // Coordenadas de Pastelería Esperanza, Ciudad de México
+            var map = L.map('map').setView([19.468714, -99.177299], 17);
+            
+            // Añadir capa de OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Añadir marcador con popup
+            var marker = L.marker([19.468714, -99.177299]).addTo(map);
+            marker.bindPopup('<div class="text-center"><b class="text-lg font-bold text-primary-700">Desesperanza</b><br>Avenida Principal 456, Centro<br><span class="text-sm text-gray-600">Martes a Domingo: 9:00 - 21:00</span></div>').openPopup();
+            
+            // Añadir un círculo alrededor de la ubicación
+            L.circle([19.468714, -99.177299], {
+                color: '#0369a1',
+                fillColor: '#0ea5e9',
+                fillOpacity: 0.2,
+                radius: 150
+            }).addTo(map);
+        });
+    </script>
 
     <footer class="bg-gradient-to-r from-primary-900 via-primary-800 to-primary-900 text-white py-8 border-t-4 border-accent-500">
         <div class="container mx-auto px-6 text-center">
